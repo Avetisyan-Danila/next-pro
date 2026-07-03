@@ -10,6 +10,7 @@ import { ArrowLeft } from 'lucide-react'
 import { Metadata } from 'next'
 import Image from 'next/image'
 import Link from 'next/link'
+import { redirect } from 'next/navigation'
 
 interface PostIdRouteProps {
 	params: Promise<{ postId: Id<'posts'> }>
@@ -45,6 +46,8 @@ export default async function PostIdRoute({ params }: PostIdRouteProps) {
 		await preloadQuery(api.comments.getCommentsByPostId, { postId }),
 		await fetchQuery(api.presence.getUserId, {}, { token }),
 	])
+
+	if (!userId) return redirect('/auth/login')
 
 	if (!post) {
 		return (
