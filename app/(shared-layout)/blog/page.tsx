@@ -4,12 +4,12 @@ import Link from 'next/link'
 import { buttonVariants } from '@/components/ui/button'
 import { fetchQuery } from 'convex/nextjs'
 import { api } from '@/convex/_generated/api'
-import { Suspense } from 'react'
 import { Skeleton } from '@/components/ui/skeleton'
 import { Metadata } from 'next'
+import { cacheLife, cacheTag } from 'next/cache'
 
-export const dynamic = 'force-static'
-export const revalidate = 30
+// export const dynamic = 'force-static'
+// export const revalidate = 30
 
 export const metadata: Metadata = {
 	title: 'NextPro | Blog',
@@ -31,14 +31,18 @@ export default function BlogPage() {
 				</p>
 			</div>
 
-			<Suspense fallback={<BlogSkeleton />}>
-				<LoadBlogList />
-			</Suspense>
+			{/* <Suspense fallback={<BlogSkeleton />}> */}
+			<LoadBlogList />
+			{/* </Suspense> */}
 		</div>
 	)
 }
 
 async function LoadBlogList() {
+	'use cache'
+	cacheLife('hours')
+	cacheTag('blog-list')
+
 	const data = await fetchQuery(api.posts.getPosts)
 
 	return (
@@ -82,7 +86,7 @@ async function LoadBlogList() {
 function BlogSkeleton() {
 	return (
 		<div className='grid gap-6 md:grid-cols-2 lg:grid-cols-3'>
-			{[...Array(3)].map((_, index) => (
+			{[...Array(6)].map((_, index) => (
 				<div key={index} className='flex flex-col space-y-3'>
 					<Skeleton className='w-full h-48 rounded-xl' />
 

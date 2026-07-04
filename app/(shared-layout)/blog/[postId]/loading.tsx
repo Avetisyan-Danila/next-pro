@@ -2,7 +2,7 @@ import { Skeleton } from '@/components/ui/skeleton'
 
 export default function PostIdLoading() {
 	return (
-		<div className='max-w-3xl mx-auto py-8 px-4'>
+		<div className='w-full mx-auto py-8 px-4'>
 			<Skeleton className='h-10 w-24 mb-6' />
 			<Skeleton className='h-[400px] w-full mb-8 rounded-xl' />
 			<div className='space-y-4'>

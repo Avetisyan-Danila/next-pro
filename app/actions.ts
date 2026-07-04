@@ -6,7 +6,7 @@ import { fetchMutation } from 'convex/nextjs'
 import { api } from '@/convex/_generated/api'
 import { redirect } from 'next/navigation'
 import { getToken } from '@/lib/auth-server'
-import { revalidatePath } from 'next/cache'
+import { updateTag } from 'next/cache'
 
 export async function createPostAction(values: z.infer<typeof postSchema>) {
 	try {
@@ -55,6 +55,6 @@ export async function createPostAction(values: z.infer<typeof postSchema>) {
 		throw new Error('Failed to upload image')
 	}
 
-	revalidatePath('/blog')
+	updateTag('blog-list')
 	return redirect('/blog')
 }
