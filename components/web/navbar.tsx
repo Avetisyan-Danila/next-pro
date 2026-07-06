@@ -8,6 +8,7 @@ import { Skeleton } from '../ui/skeleton'
 import { authClient } from '@/lib/auth-client'
 import { toast } from 'sonner'
 import { useRouter } from 'next/navigation'
+import { SearchInput } from './SearchInput'
 
 export function Navbar() {
 	const { isAuthenticated, isLoading } = useConvexAuth()
@@ -36,6 +37,9 @@ export function Navbar() {
 			</div>
 
 			<div className='flex items-center gap-2'>
+				<div className='hidden md:block mr-2'>
+					<SearchInput />
+				</div>
 				{isLoading ? (
 					<Skeleton className='w-35 h-8' />
 				) : isAuthenticated ? (
